@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
                 Container(child: Image.asset('assets/SkyLineLogo.png'),),
                 RaisedButton(onPressed: () {
                   model.routeToTeacherView();
-                }, textColor: kColorSkylineGreen,color: kColorSkyLineGrey, child: Text('Teacher Screen'),),
+                }, textColor: kColorSkylineGreen,color: kColorSkyLineGrey, child: Text('Teacher View'),),
               ],
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,

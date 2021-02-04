@@ -4,7 +4,6 @@ import 'package:skyline_template_app/core/services/navigation_service.dart';
 import 'package:get_it/get_it.dart';
 import 'viewmodels/home_viewmodel.dart';
 
-
 GetIt locator = GetIt.instance;
 
 Future setupLocator() async {
