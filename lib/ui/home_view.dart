@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:skyline_template_app/core/utilities/constants.dart';
 import 'package:skyline_template_app/viewmodels/home_viewmodel.dart';
-import 'package:provider/provider.dart';
+
 import 'package:flutter/cupertino.dart';
-import 'package:skyline_template_app/locator.dart';
+
+import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HomeViewModel>(
-      create: (context) => locator<HomeViewModel>(),
-      child: Consumer<HomeViewModel>(
-        builder: (context, model, child) => SafeArea(
-          child: Scaffold(
+    return ViewModelBuilder<HomeViewModel>.reactive(
+      disposeViewModel: false,
+      viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (viewModel) => viewModel.init(),
+      builder: (context, viewModel, child) => Scaffold(
             backgroundColor: kColorSkylineGreen,
             body: Column(
               children: [
@@ -21,15 +22,14 @@ class HomeView extends StatelessWidget {
                 ),SizedBox(height: 10,),
                 Container(child: Image.asset('assets/SkyLineLogo.png'),),
                 RaisedButton(onPressed: () {
-                  model.routeToTeacherView();
+                  viewModel.routeToTeacherView();
                 }, textColor: kColorSkylineGreen,color: kColorSkyLineGrey, child: Text('Teacher View'),),
               ],
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
             ),
           ),
-        ),
-      ),
-    );
+        );
+
   }
 }

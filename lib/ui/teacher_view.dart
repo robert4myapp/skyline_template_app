@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:skyline_template_app/viewmodels/teacher_viewmodel.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:skyline_template_app/locator.dart';
 import 'package:skyline_template_app/core/utilities/constants.dart';
+import 'package:stacked/stacked.dart';
 
 class TeacherView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TeacherViewModel>(
-      create: (context) => locator<TeacherViewModel>(),
-      child: Consumer<TeacherViewModel>(
-        builder: (context, model, child) => SafeArea(
-          child: Scaffold(
+    return ViewModelBuilder<TeacherViewModel>.reactive(
+      viewModelBuilder: () => TeacherViewModel(),
+      disposeViewModel: false,
+      onModelReady: (viewModel) => viewModel.init(),
+        builder: (context, viewModel, child) => Scaffold(
             backgroundColor: kColorSkylineGreen,
             body: Column(
               children: [
@@ -35,22 +34,22 @@ class TeacherView extends StatelessWidget {
                   color: kColorSkyLineGrey,
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      final firstName = model.teachers[index].firstName ?? 'na';
-                      final lastName = model.teachers[index].lastName ?? 'na';
-                      final email = model.teachers[index].email ?? 'na';
+                      final firstName = viewModel.teachers[index].firstName ?? 'na';
+                      final lastName = viewModel.teachers[index].lastName ?? 'na';
+                      final email = viewModel.teachers[index].email ?? 'na';
                       return ListTile(tileColor: index%2 ==0 ? kColorSkyLineGrey : kColorSkylineDarkGrey,
                         title: Text('$firstName $lastName'),
                         subtitle: Text(email),
                       );
                     },
-                    itemCount: model.teachers.length,
+                    itemCount: viewModel.teachers.length,
                   ),
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RaisedButton(
                       onPressed: () {
-                        model.addTeacher();
+                        viewModel.addTeacher();
                       },
                       textColor: kColorSkylineGreen,
                       color: kColorSkyLineGrey,
@@ -58,7 +57,7 @@ class TeacherView extends StatelessWidget {
                     ),SizedBox(width: 5,),
                     RaisedButton(
                       onPressed: () {
-                        model.routeToHomeView();
+                        viewModel.routeToHomeView();
                       },
                       textColor: kColorSkylineGreen,
                       color: kColorSkyLineGrey,
@@ -71,8 +70,6 @@ class TeacherView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
             ),
           ),
-        ),
-      ),
     );
   }
 }
